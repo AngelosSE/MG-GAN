@@ -102,6 +102,9 @@ if __name__ == "__main__":
     torch.set_grad_enabled(False)
 
     model_dirs = [d for d in Path(args.model_path).iterdir() if "version" in d.stem]
+    #model_dirs = [d for d in Path(args.model_path).iterdir() if "gens" in d.stem]
+    print(args.model_path)
+    print([d.stem for d in Path(args.model_path).iterdir()])
 
     models = []
     for pred_strat in pred_strats:
@@ -131,7 +134,7 @@ if __name__ == "__main__":
             all_results["Training dataset"].append(config.dataset)
             config.dataset = args.eval_set
 
-        test_loader, _ = get_dataloader(
+        test_loader = get_dataloader(
             config.dataset, phase, batch_size=32, split=split
         )
 

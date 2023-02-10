@@ -26,7 +26,7 @@ class MultiGeneratorGAN(abc.ABC):
     def __init__(self, generator, discriminator, config, writer):
         self.writer: Experiment = writer
         self.config = config
-        self.device = torch.device("cuda" if config.gpus else "cpu")
+        self.device = torch.device("cpu")
         self.D = discriminator.to(self.device)
         self.G = generator.to(self.device)
         self.l2_weight = self.config.l2_loss_weight
@@ -38,8 +38,6 @@ class MultiGeneratorGAN(abc.ABC):
         self.model_save_dir = self.log_dir / "checkpoints"
         self.model_save_dir.mkdir(exist_ok=True)
 
-        if config.gpus:
-            torch.set_default_tensor_type("torch.cuda.FloatTensor")
 
         # setup optimizer
         self.optimizerD = torch.optim.AdamW(
@@ -261,7 +259,7 @@ class MultiGeneratorGAN(abc.ABC):
             checkpoint = max(checkpoint_epochs)
 
         checkpoint_path = checkpoint_dir / "checkpoint_{}.pth".format(checkpoint)
-        state_dicts = torch.load(checkpoint_path)
+        state_dicts = torch.load(checkpoint_path,map_location=torch.device('cpu'))
         tags_csv = version_dir / "meta_tags.csv"
         config = load_hparams_from_tags_csv(tags_csv)
 

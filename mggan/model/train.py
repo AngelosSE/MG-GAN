@@ -669,7 +669,7 @@ if __name__ == "__main__":
         output_dir = Path(args.checkpoint)
         assert output_dir.is_dir()
         model, config = PiNetMultiGeneratorGAN.load_from_path(output_dir)
-        config.gpus = True
+        config.gpus = False
         config.val_every = 1
     else:
         output_dir = Path(args.log_dir) / args.experiment

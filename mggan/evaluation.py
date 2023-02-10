@@ -37,7 +37,9 @@ def get_same_obs_indices(eval_ds):
             [*obs_trajs[start:end].reshape(-1).tolist(), eval_ds.scene_list[scene_idx]]
         )
         same_scene_dict[scene_key].append([i for i in range(start, end)])
-    return list(same_scene_dict.values())
+    #return list(same_scene_dict.values())
+    scenes = [s for *_,s in same_scene_dict.keys()]
+    return list(same_scene_dict.values()),scenes
 
 
 def evaluate_ade_fde(eval_ds, preds, n_preds_list):
@@ -65,7 +67,7 @@ def evaluate_ade_fde(eval_ds, preds, n_preds_list):
                 torch.from_numpy(preds[:, :n_preds, start:end]) * scaling,
                 torch.from_numpy(gt_trajs[start:end]).transpose(0, 1) * scaling,
                 [[0, end - start]],
-                None,
+#                None,
                 "raw",
             )
 

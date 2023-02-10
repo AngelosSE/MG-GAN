@@ -1,0 +1,19 @@
+name: mggan
+channels:
+  - pytorch
+  - defaults
+  - apple
+  - conda-forge
+dependencies:
+  - python=3.8
+  - matplotlib=3.2
+  - tqdm=4.48
+  - pytorch=1.6
+  - numpy=1.19
+  - pandas=1.1
+  - pillow=7.2
+  - pip=20.2.2
+  - shapely
+  - pip:
+      - test-tube==0.7
+      - opencv-python==4.4.0.40
